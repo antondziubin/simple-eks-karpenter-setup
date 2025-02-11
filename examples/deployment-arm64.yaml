@@ -1,0 +1,26 @@
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: inflate-arm64
+spec:
+  replicas: 0
+  selector:
+    matchLabels:
+      app: inflate-arm64
+  template:
+    metadata:
+      labels:
+        app: inflate-arm64
+    spec:
+      nodeSelector:
+        intent: apps
+        kubernetes.io/arch: arm64
+        karpenter.sh/capacity-type: spot
+      containers:
+        - image: public.ecr.aws/eks-distro/kubernetes/pause:3.2
+          name: inflate-arm64
+          resources:
+            requests:
+              cpu: "1"
+              memory: 256M
+

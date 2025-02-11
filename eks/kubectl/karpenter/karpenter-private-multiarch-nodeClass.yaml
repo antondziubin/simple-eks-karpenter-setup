@@ -1,0 +1,30 @@
+apiVersion: karpenter.k8s.aws/v1
+kind: EC2NodeClass
+metadata:
+  name: private-multiarch
+spec:
+  metadataOptions:
+    httpPutResponseHopLimit: 1 # This is changed to disable IMDS access from containers not on the host network
+  blockDeviceMappings:
+    - deviceName: /dev/xvda
+      ebs:
+        encrypted: true
+        volumeSize: 20Gi
+        volumeType: gp3
+    - deviceName: /dev/xvdb
+      ebs:
+        volumeSize: 128Gi
+        volumeType: gp3
+        encrypted: true
+  role: ${KARPENTER_ROLE_NAME}
+  subnetSelectorTerms:
+    - tags:
+        Name: "*private*"
+        karpenter.sh/discovery: ${CLUSTER_NAME}
+  securityGroupSelectorTerms:
+    - tags:
+        karpenter.sh/discovery: ${CLUSTER_NAME}
+  amiSelectorTerms:
+    - alias: bottlerocket@1.32.0
+  tags:
+    karpenter.sh/discovery: ${CLUSTER_NAME}

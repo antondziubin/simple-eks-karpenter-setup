@@ -1,0 +1,6 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<project version="4">
+  <component name="TerraformProjectSettings" ignoredTemplateCandidatePaths="[file://C:/Users/fiban/GolandProjects/test-eks-proj/eks/kubectl/karpenter/karpenter-private-multiarch-nodeClass.yaml]">
+    <option name="toolPath" value="C:\Terraform\terraform.exe" />
+  </component>
+</project>
